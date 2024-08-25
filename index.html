@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme and Sophon Simulation</title>
+    <style>
+        html {color: whitesmoke; background-color: #233844;}
+        canvas { border: 1px solid black; }
+        #controls { margin-bottom: 10px; }
+        .info { margin-top: 10px; font-family: Arial, sans-serif; width: 800px; margin: auto;}
+        .chart-container { width: 800px; height: 400px; }
+        .centered { text-align: -webkit-center; }
+         #controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 800px;
+            max-width: 800px;
+            flex-wrap: wrap;
+        }
+
+        .slider-container {
+            flex: 1 1 30%; /* Adjusts to have 3 sliders per row */
+            margin: 10px;
+            text-align: center;
+        }
+
+        .slider-container label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .slider-container input[type="range"] {
+            width: 100%;
+        }
+
+        .slider-container span {
+            display: block;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="info">
+        <h3>Simulation Instructions:</h3>
+        <p>This simulation models meme infection and suppression within a network of sentient repeaters. (Either human, algo, or AI) Here's a detailed explanation of how it works:</p>
+        
+        <h4>What is a Node?</h4>
+        <p><strong>Nodes</strong> are the individual sentient repeaters that can interact with other nodes. (Represented by light gray lines) Nodes have three modes:</p>
+        <ul>
+            <li><strong>Infected</strong> (<b><span style="color: #DFDF00;">Yellow</span></b>): Infected nodes spread infections to other nodes they are connected to.</li>
+            <li><strong>Sophons</strong> (<b><span style="color: #BB0000;">Red</span></b>): These nodes suppress memes.</li>
+            <li><strong>Neutral</strong> (<b><span style="color: gray;">Gray</span></b>): These nodes have either not been infected or have had their infection suppressed.</li>
+        </ul>
+
+        <p><strong>Infected</strong> (<b><span style="color: #DFDF00;">Yellow nodes</span></b>) spread by converting their neighboring nodes (those directly connected to them) into infected. At each simulation step, each infected node has a probability to convert a neutral node into a meme. This simulates the influence of memes spreading through the network.</p>
+
+        <p><strong>Sophons</strong> (<b><span style="color: #BB0000;">Red nodes</span></b>) suppress memes by converting infected nodes into neutral nodes. Each sophon interacts with its neighbors, and if a neighboring node is a meme and the suppression condition is met, the sophon converts the infected into a neutral node. Sophons do not spread but act to reduce the number of infected nodes around it.</p>
+    </div>
+
+    <div class="centered">
+        <canvas id="networkCanvas" width="800" height="600"></canvas>
+
+        <div id="controls">
+            <div class="slider-container">
+                <label for="spreadRateSlider">Spread Rate:</label>
+                <b><span id="spreadRateValue">5%</span></b>
+                <input type="range" id="spreadRateSlider" min="0" max="1" step="0.01" value="0.05">
+            </div>
+
+            <div class="slider-container">
+                <label for="sophonSuppressRateSlider">Sophon Suppression Rate:</label>
+                <b><span id="sophonSuppressRateValue">20%</span></b>
+                <input type="range" id="sophonSuppressRateSlider" min="0" max="1" step="0.01" value="0.2">
+            </div>
+
+            <div class="slider-container">
+                <label for="sophonCountSlider">Number of Sophons:</label>
+                <b><span id="sophonCountValue">20</span></b>
+                <input type="range" id="sophonCountSlider" min="0" max="100" step="1" value="20">
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="metricsChart"></canvas>
+        </div>
+    </div>
+
+    <div class="info">
+        <p>You'll notice the network is in conflict where ever sophons connect.  Nodes around sophons become infected and suppressed constantly.</p>
+        <p>If you lower the amount of Sophons, you'll notice meme infections quickly take over the whole network.</p>
+        <p>Since Sophons are fixed in place, increasing the number of Sophons is one of the most certain ways to suppress network-wide infection. 
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="simulation.js"></script>
+</body>
+</html>
